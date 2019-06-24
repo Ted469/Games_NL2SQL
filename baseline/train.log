@@ -1,0 +1,113 @@
+Loading dataset
+Loaded 4396 data from data/val/val.json
+Loaded 1197 data from data/val/val.tables.json
+Loaded 36980 data from data/train/train.json
+Loaded 4127 data from data/train/train.tables.json
+Loading word embedding from data/char_embedding.json
+Using fixed embedding
+Using column attention on select number predicting
+Using column attention on selection predicting
+Using column attention on aggregator predicting
+Using column attention on where predicting
+Using column attention on where relation predicting
+SQLNet(
+  (embed_layer): WordEmbedding()
+  (sel_num): SelNumPredictor(
+    (sel_num_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (sel_num_att): Linear(in_features=100, out_features=1, bias=True)
+    (sel_num_col_att): Linear(in_features=100, out_features=1, bias=True)
+    (sel_num_out): Sequential(
+      (0): Linear(in_features=100, out_features=100, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=100, out_features=4, bias=True)
+    )
+    (softmax): Softmax()
+    (sel_num_col2hid1): Linear(in_features=100, out_features=200, bias=True)
+    (sel_num_col2hid2): Linear(in_features=100, out_features=200, bias=True)
+  )
+  (sel_pred): SelPredictor(
+    (sel_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (sel_att): Linear(in_features=100, out_features=100, bias=True)
+    (sel_col_name_enc): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (sel_out_K): Linear(in_features=100, out_features=100, bias=True)
+    (sel_out_col): Linear(in_features=100, out_features=100, bias=True)
+    (sel_out): Sequential(
+      (0): Tanh()
+      (1): Linear(in_features=100, out_features=1, bias=True)
+    )
+    (softmax): Softmax()
+  )
+  (agg_pred): AggPredictor(
+    (agg_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (agg_col_name_enc): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (agg_att): Linear(in_features=100, out_features=100, bias=True)
+    (agg_out): Sequential(
+      (0): Linear(in_features=100, out_features=100, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=100, out_features=6, bias=True)
+    )
+    (softmax): Softmax()
+    (agg_out_K): Linear(in_features=100, out_features=100, bias=True)
+    (col_out_col): Linear(in_features=100, out_features=100, bias=True)
+  )
+  (cond_pred): SQLNetCondPredictor(
+    (cond_num_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_num_att): Linear(in_features=100, out_features=1, bias=True)
+    (cond_num_out): Sequential(
+      (0): Linear(in_features=100, out_features=100, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=100, out_features=5, bias=True)
+    )
+    (cond_num_name_enc): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_num_col_att): Linear(in_features=100, out_features=1, bias=True)
+    (cond_num_col2hid1): Linear(in_features=100, out_features=200, bias=True)
+    (cond_num_col2hid2): Linear(in_features=100, out_features=200, bias=True)
+    (cond_col_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_col_att): Linear(in_features=100, out_features=100, bias=True)
+    (cond_col_name_enc): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_col_out_K): Linear(in_features=100, out_features=100, bias=True)
+    (cond_col_out_col): Linear(in_features=100, out_features=100, bias=True)
+    (cond_col_out): Sequential(
+      (0): ReLU()
+      (1): Linear(in_features=100, out_features=1, bias=True)
+    )
+    (cond_op_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_op_att): Linear(in_features=100, out_features=100, bias=True)
+    (cond_op_out_K): Linear(in_features=100, out_features=100, bias=True)
+    (cond_op_name_enc): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_op_out_col): Linear(in_features=100, out_features=100, bias=True)
+    (cond_op_out): Sequential(
+      (0): Linear(in_features=100, out_features=100, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=100, out_features=4, bias=True)
+    )
+    (cond_str_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_str_decoder): LSTM(200, 100, num_layers=2, batch_first=True, dropout=0.3)
+    (cond_str_name_enc): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (cond_str_out_g): Linear(in_features=100, out_features=100, bias=True)
+    (cond_str_out_h): Linear(in_features=100, out_features=100, bias=True)
+    (cond_str_out_col): Linear(in_features=100, out_features=100, bias=True)
+    (cond_str_out): Sequential(
+      (0): ReLU()
+      (1): Linear(in_features=100, out_features=1, bias=True)
+    )
+    (softmax): Softmax()
+  )
+  (where_rela_pred): WhereRelationPredictor(
+    (where_rela_lstm): LSTM(300, 50, num_layers=2, batch_first=True, dropout=0.3, bidirectional=True)
+    (where_rela_att): Linear(in_features=100, out_features=1, bias=True)
+    (where_rela_col_att): Linear(in_features=100, out_features=1, bias=True)
+    (where_rela_out): Sequential(
+      (0): Linear(in_features=100, out_features=100, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=100, out_features=3, bias=True)
+    )
+    (softmax): Softmax()
+    (col2hid1): Linear(in_features=100, out_features=200, bias=True)
+    (col2hid2): Linear(in_features=100, out_features=200, bias=True)
+  )
+  (CE): CrossEntropyLoss()
+  (softmax): Softmax()
+  (log_softmax): LogSoftmax()
+  (bce_logit): BCEWithLogitsLoss()
+)
